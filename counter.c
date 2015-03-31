@@ -33,7 +33,7 @@ double korrekturwert = 0.999985750203;	// Korrekturwert ausgemessen mit externem
 /*** Timer Routinen ***/
 ISR(TIMER0_COMPA_vect)		// wird mit 125Hz  aufgerufen (16MHz/1024/125, alle 8ms)
 	{
-		uint8_t adcin_temp;			// Var. für PINF
+		uint8_t adcin_temp;		// Var. für PINF
 		uint16_t counter_temp;		// Var. zur zwischenspeicherung Zählerstand
 
 		adcin_temp = PINF;
@@ -48,7 +48,6 @@ ISR(TIMER0_COMPA_vect)		// wird mit 125Hz  aufgerufen (16MHz/1024/125, alle 8ms)
 				PORTB &= ~(1<<PB0);		// 74HC393 auf Ursprung
 				TCNT1 = 0;				    // Zählerwert rücksetzen
 				tick1 = 0;			    	// Tick rücksetzen
-
 				// Frequenzregister bilden, mit Korrekturwert
 				freq1 = ( (((uint32_t)count_overflows)<<24) | (((uint32_t)counter_temp)<<8) | (uint32_t)adcin_temp);
 				//freq_change=1;
@@ -67,17 +66,17 @@ int main()
 	{	
 		// Init ADC Eingänge
 		DDRF = 0b00000000;		// Port F auf Eingang setzen (Prescaler auslesen)
-		uint8_t bPortF;			  // Variable für Port F
-		bPortF = PINF;			  // Wird in Variable geschrieben
+		uint8_t bPortF;			// Variable für Port F
+		bPortF = PINF;			// Wird in Variable geschrieben
 		// Init Timer Ein-/Ausgänge
 		DDRD = 0b01000000; 		// PD6 als Eingang (T1)
-		DDRD |= (1 << PD7); 	// PD7 als Ausgang (T0) für 74HC393
+		DDRD |= (1 << PD7); 		// PD7 als Ausgang (T0) für 74HC393
 
 		/*** Timer-Initialisierungen ***/
 		// Timer0: Fenster in dem gezählt wird
- 		TCCR0B |= (1<<CS02) | (1<<CS00) | (1<<WGM01);// Timer0 Prescaler 1024 und CTC Modus (S.82)
-		OCR0A = 124;				// Ab Zählschritt 125 INT auslösen (S.106)
-		TIMSK0 |= (1<<OCIE0A); 		// Erlaube Overflow INT, Timer0
+ 		TCCR0B |= (1<<CS02) | (1<<CS00) | (1<<WGM01);	// Timer0 Prescaler 1024 und CTC Modus (S.82)
+		OCR0A = 124;					// Ab Zählschritt 125 INT auslösen (S.106)
+		TIMSK0 |= (1<<OCIE0A); 				// Erlaube Overflow INT, Timer0
 		// Timer1: Flanken zählen
 		TCCR1A |= (1<<ICES1) | (1<<CS11);	// Prescale 8, Input Capture Edge Select (S.110)
 		TIMSK1 |= (1<<TOIE1) | (1<<ICIE1); 	// OVF und CAPT Int erlauben, Timer1 (S.112)
@@ -85,6 +84,6 @@ int main()
 		sei();					// Interrupts erlauben
 
 		while(1){
-		      freq_ausgabe_high1 = (freq1 * korrekturwert);	// Frequenz mit Korrektur berechnen
+			freq_ausgabe_high1 = (freq1 * korrekturwert);	// Frequenz mit Korrektur berechnen
 		  }
 	}
