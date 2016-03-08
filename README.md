@@ -1,4 +1,4 @@
 # Frequency-Counter
 - created with C sourcecode
-- Testing with ATmega32 and ATmega32U4 as µCs
+- Tested with ATmega32U4
 - Pending: I2C and LCD integration
