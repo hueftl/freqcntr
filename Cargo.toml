@@ -1,0 +1,7 @@
+[package]
+name = "freqcntr"
+authors = ["Alexander Menne <alexander.menne@nextgenerationgeek.de>"]
+license = "MIT"
+keywords = ["avr", "microcontroller"]
+repository = "https://github.com/nextgenerationgeek/freqcntr"
+version = "0.0.1"
